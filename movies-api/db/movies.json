@@ -1,0 +1,156 @@
+[
+  {
+    "title": "John Wick",
+    "year": 2014,
+    "genre": [
+      "action",
+      "crime",
+      "thriller"
+    ],
+    "minutes": 101
+  },
+  {
+    "title": "Jack Reacher",
+    "year": 2012,
+    "genre": [
+      "action",
+      "crime",
+      "thriller"
+    ],
+    "minutes": 130
+  },
+  {
+    "title": "The Dark Knight",
+    "year": 2008,
+    "genre": [
+      "action",
+      "crime",
+      "drama"
+    ],
+    "minutes": 152
+  },
+  {
+    "title": "Fight Club",
+    "year": 1999,
+    "genre": [
+      "drama"
+    ],
+    "minutes": 139
+  },
+  {
+    "title": "Troy",
+    "year": 2004,
+    "genre": [
+      "drama",
+      "history"
+    ],
+    "minutes": 163
+  },
+  {
+    "title": "Rambo: First Blood",
+    "year": 1982,
+    "genre": [
+      "action",
+      "adventure"
+    ],
+    "minutes": 93
+  },
+  {
+    "title": "The Godfather",
+    "year": 1972,
+    "genre": [
+      "crime",
+      "drama"
+    ],
+    "minutes": 175
+  },
+  {
+    "title": "Collateral",
+    "year": 2004,
+    "genre": [
+      "crime",
+      "drama",
+      "thriller"
+    ],
+    "minutes": 120
+  },
+  {
+    "title": "Payback",
+    "year": 1999,
+    "genre": [
+      "action",
+      "crime",
+      "drama"
+    ],
+    "minutes": 100
+  },
+  {
+    "title": "The Last Samurai",
+    "year": 2003,
+    "genre": [
+      "action",
+      "drama",
+      "history"
+    ],
+    "minutes": 154
+  },
+  {
+    "title": "Watchmen",
+    "year": 2009,
+    "genre": [
+      "action",
+      "drama",
+      "mystery"
+    ],
+    "minutes": 162
+  },
+  {
+    "title": "The Big Lebowski",
+    "year": 1998,
+    "genre": [
+      "comedy",
+      "crime"
+    ],
+    "minutes": 117
+  },
+  {
+    "title": "Inception",
+    "year": 2010,
+    "genre": [
+      "action",
+      "adventure",
+      "sci-fi"
+    ],
+    "minutes": 148
+  },
+  {
+    "title": "Avatar",
+    "year": 2009,
+    "genre": [
+      "action",
+      "adventure",
+      "fantasy"
+    ],
+    "minutes": 162
+  },
+  {
+    "title": "Pacific Rim",
+    "year": 2013,
+    "genre": [
+      "action",
+      "adventure",
+      "sci-fi"
+    ],
+    "minutes": 131
+  },
+  {
+    "title": "Independence Day",
+    "year": 1996,
+    "genre": [
+      "action",
+      "adventure",
+      "sci-fi"
+    ],
+    "minutes": 145
+  }
+]
