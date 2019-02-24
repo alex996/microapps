@@ -3,7 +3,7 @@
 ## Tech
 
 - express + mongoose REST API
-- postgres + sqorn + hapi
+- postgres + sqorn + hapi + joi/celebrate
 - passport auth
 - redux-like context (todos)
 - react + react-window + pdfjs
@@ -22,6 +22,10 @@
 - bank
 - blog
 - forum
+- airport
+- animal species
+- transformers
+- TWD
 
 ## Other
 
