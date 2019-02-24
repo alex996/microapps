@@ -1,12 +1,12 @@
 import mongoose from 'mongoose'
-import { DB_URI } from '../src/config'
+import { DB_URI, DB_OPTIONS } from '../src/config'
 import { Movie } from '../src/models'
 import movies from './movies.json'
 
 (async () => {
   try {
     console.log('Connecting to MongoDB...')
-    await mongoose.connect(DB_URI, { useNewUrlParser: true })
+    await mongoose.connect(DB_URI, DB_OPTIONS)
 
     console.log('Clearing movies collection...')
     await Movie.deleteMany({})

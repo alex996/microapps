@@ -1,11 +1,11 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import { APP_PORT, DB_URI } from './config'
+import { APP_PORT, DB_URI, DB_OPTIONS } from './config'
 import { movies, notFound, errorHandler } from './middleware'
 
 (async () => {
   try {
-    await mongoose.connect(DB_URI, { useNewUrlParser: true })
+    await mongoose.connect(DB_URI, DB_OPTIONS)
 
     const app = express()
 
