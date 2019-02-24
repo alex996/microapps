@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "name": "movies-api",
+  "version": "1.0.0",
+  "main": "dist/main.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "webpack --watch --mode development",
+    "build": "webpack --mode production",
+    "start": "node dist/main"
+  },
+  "dependencies": {
+    "express": "^5.0.0-alpha.7",
+    "mongoose": "^5.4.15"
+  },
+  "devDependencies": {
+    "nodemon-webpack-plugin": "^4.0.7",
+    "standard": "^12.0.1",
+    "webpack": "^4.29.5",
+    "webpack-cli": "^3.2.3",
+    "webpack-node-externals": "^1.7.2"
+  }
+}
