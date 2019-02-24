@@ -1,5 +1,6 @@
 import express from 'express'
 import mongoose from 'mongoose'
+import cors from 'cors'
 import morgan from 'morgan'
 import { APP_PORT, LOG_FORMAT, DB_URI, DB_OPTIONS } from './config'
 import { movies, notFound, errorHandler } from './middleware'
@@ -11,6 +12,8 @@ import { movies, notFound, errorHandler } from './middleware'
     const app = express()
 
     app.disable('x-powered-by')
+
+    app.use(cors())
 
     app.use(express.json())
 
