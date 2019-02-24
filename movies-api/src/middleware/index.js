@@ -1,3 +1,3 @@
-export * from './movies'
+export { default as movies } from './movies'
 
-export * from './errors'
+export { default as errors } from './errors'

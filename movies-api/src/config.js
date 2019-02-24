@@ -3,7 +3,7 @@ export const {
 
   DB_HOST = 'localhost',
   DB_PORT = 27017,
-  DB_NAME = 'movies',
+  DB_NAME = 'cinema',
   DB_USERNAME = 'admin',
   DB_PASSWORD = 'secret',
 

@@ -2,7 +2,7 @@ import mongoose, { Schema } from 'mongoose'
 
 const { ObjectId } = Schema.Types
 
-const movieSchema = new Schema('Movie', {
+const movieSchema = new Schema({
   title: String,
   year: Number,
   reviews: [{
