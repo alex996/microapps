@@ -1,7 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import { APP_PORT, DB_URI } from './config'
-import { movies, errors } from './middleware'
+import { movies, notFound, errorHandler } from './middleware'
 
 (async () => {
   try {
@@ -9,11 +9,15 @@ import { movies, errors } from './middleware'
 
     const app = express()
 
+    app.disable('x-powered-by')
+
     app.use(express.urlencoded({ extended: true }))
 
     app.use(movies)
 
-    app.use(errors)
+    app.use(notFound)
+
+    app.use(errorHandler)
 
     app.listen(APP_PORT, () => console.log(`http://localhost:${APP_PORT}`))
   } catch (e) {

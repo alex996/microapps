@@ -1,21 +1,13 @@
-import express from 'express'
-
-const router = express.Router()
-
-router.use((req, res, next) => {
+export const notFound = (req, res, next) => {
   res.status(404).json({
     message: 'Not Found'
   })
-})
+}
 
-router.use((err, req, res, next) => {
-  const {
-    status = 500,
-    message = 'Internal Server Error'
-  } = err
+export const errorHandler = (err, req, res, next) => {
+  const status = err.status || 500
+  const message = err.message || 'Internal Server Error'
 
   status === 500 && console.error(err)
-  res.status(status).json(message)
-})
-
-export default router
+  res.status(status || 500).json({ message })
+}
