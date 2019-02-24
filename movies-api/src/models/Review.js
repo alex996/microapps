@@ -28,8 +28,8 @@ const reviewSchema = new Schema({
   rating: {
     type: Number,
     required: true,
-    minlength: 1,
-    maxlength: 5
+    min: 1,
+    max: 5
   }
 }, {
   timestamps: true

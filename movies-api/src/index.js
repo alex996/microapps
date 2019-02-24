@@ -1,6 +1,7 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import { APP_PORT, DB_URI, DB_OPTIONS } from './config'
+import morgan from 'morgan'
+import { APP_PORT, LOG_FORMAT, DB_URI, DB_OPTIONS } from './config'
 import { movies, notFound, errorHandler } from './middleware'
 
 (async () => {
@@ -12,6 +13,8 @@ import { movies, notFound, errorHandler } from './middleware'
     app.disable('x-powered-by')
 
     app.use(express.json())
+
+    app.use(morgan(LOG_FORMAT))
 
     app.use(movies)
 

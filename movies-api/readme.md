@@ -40,6 +40,5 @@ curl 127.0.0.1:27017 # It looks like you are trying to access MongoDB over HTTP 
 
 - pagination
 - filtering
-- validation (e.g. celebrate or mongoose)
 - csrf (e.g. csurf)
 - security headers

@@ -11,7 +11,7 @@ router.route('/movies')
   .post(async (req, res) => {
     const { title, genre, minutes, year } = req.body
     const movie = await Movie.create({ title, genre, minutes, year })
-    res.json(movie)
+    res.status(201).json(movie)
   })
 
 router.route('/movies/:id')
