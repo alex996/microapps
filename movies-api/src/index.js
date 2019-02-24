@@ -11,7 +11,7 @@ import { movies, notFound, errorHandler } from './middleware'
 
     app.disable('x-powered-by')
 
-    app.use(express.urlencoded({ extended: true }))
+    app.use(express.json())
 
     app.use(movies)
 

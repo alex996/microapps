@@ -1,12 +1,36 @@
 import mongoose, { Schema } from 'mongoose'
 
 const reviewSchema = new Schema({
-  comment: String,
-  author: {
-    name: String,
-    email: String
+  comment: {
+    type: String,
+    required: true,
+    minlength: 1,
+    maxlength: 4000
   },
-  stars: Number
+  author: {
+    name: {
+      type: String,
+      required: true,
+      minlength: 1,
+      maxlength: 255
+    },
+    email: {
+      type: String,
+      required: true,
+      minlength: 1,
+      maxlength: 254,
+      validate: [
+        email => /^\S+@\S+$/,
+        '{PATH} must be a valid email address.'
+      ]
+    }
+  },
+  rating: {
+    type: Number,
+    required: true,
+    minlength: 1,
+    maxlength: 5
+  }
 }, {
   timestamps: true
 })
