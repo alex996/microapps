@@ -9,4 +9,4 @@
 
 ## TODO
 
-- code splitting + bundle hash
+- code splitting

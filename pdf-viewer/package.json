@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --open --port 3000 --compress --mode development",
+    "prebuild": "rm -rf dist",
     "build": "webpack --mode production --progress",
     "serve": "serve dist"
   },
