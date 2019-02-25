@@ -1,7 +1,8 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-module.exports = {
+module.exports = (env, { mode }) => ({
   devtool: 'cheap-module-source-map',
   module: {
     rules: [
@@ -11,6 +12,14 @@ module.exports = {
         use: {
           loader: 'babel-loader'
         }
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          mode === 'development' ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'sass-loader'
+        ]
       }
     ]
   },
@@ -23,6 +32,7 @@ module.exports = {
         from: 'node_modules/pdfjs-dist/cmaps/',
         to: 'cmaps/'
       }
-    ])
+    ]),
+    new MiniCssExtractPlugin()
   ]
-}
+})

@@ -1,3 +1,4 @@
+import './style.scss'
 import React, { useState } from 'react'
 import { Document, Page } from 'react-pdf/dist/entry.webpack'
 
@@ -23,6 +24,7 @@ const PdfViewer = props => {
   return (
     <Document
       file={pdfUrl}
+      className='viewer'
       options={options}
       onLoadSuccess={handlePdfLoad}
       renderMode='svg'
