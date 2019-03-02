@@ -1,13 +1,9 @@
-import { TOGGLE_THEME, CHANGE_LOCALE } from '.'
+import { TOGGLE_THEME, CHANGE_LOCALE, LIGHT, DARK, EN } from '.'
 
-const light = 'light'
-const dark = 'dark'
-const en = 'en'
-
-const initialState = {
-  theme: light,
-  locale: en,
-  auth: null
+export const initialState = {
+  theme: LIGHT,
+  locale: EN,
+  todos: []
 }
 
 export const app = (state = initialState, action = {}) => {
@@ -15,7 +11,7 @@ export const app = (state = initialState, action = {}) => {
     case TOGGLE_THEME:
       return {
         ...state,
-        theme: state.theme === light ? dark : light
+        theme: state.theme === LIGHT ? DARK : LIGHT
       }
     case CHANGE_LOCALE:
       return {
