@@ -1,0 +1,3 @@
+export const TOGGLE_THEME = 'TOGGLE_THEME'
+
+export const CHANGE_LOCALE = 'CHANGE_LOCALE'

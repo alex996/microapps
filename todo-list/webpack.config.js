@@ -1,5 +1,7 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
+console.log(__dirname)
+
 module.exports = {
   devtool: 'cheap-module-source-map',
   output: {
