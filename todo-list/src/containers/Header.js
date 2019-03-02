@@ -5,8 +5,8 @@ import {
   ThemeSwitch,
   LanguagePicker
 } from '../components'
-import { connect } from '../redux'
 import { LOCALES, EN, LIGHT, toggleTheme, changeLocale } from '../store'
+import { connect } from '../redux'
 
 const Header = ({ theme, toggleTheme, locale, locales, changeLocale }) => (
   <header>
