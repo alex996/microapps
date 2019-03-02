@@ -18,9 +18,19 @@ const renderPage = (_, index) => (
 )
 
 const PdfViewer = props => {
-  const [numPages, setNumPages] = useState(0)
-  const handlePdfLoad = pdf => setNumPages(pdf.numPages)
-  const pages = [...Array(numPages)]
+  const [pages, setPages] = useState([])
+
+  const handlePdfLoad = pdf => {
+    const promises = Array
+      .from({ length: pdf.numPages }, (_, index) => index + 1) // [1,2,3,...N]
+      .map(pageNumber => pdf.getPage(pageNumber)) // [PDFPageProxy,...]
+
+    Promise.all(promises).then(pdfPages => {
+      const pages = pdfPages.map(page => ({ height: page.height }))
+
+      setPages(pages)
+    })
+  }
 
   return (
     <Document
