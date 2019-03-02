@@ -1,8 +1,8 @@
-import './style.scss'
 import React, { useState } from 'react'
 import { Document, Page } from 'react-pdf/dist/entry.webpack'
 
-const pdfUrl = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf'
+// const pdfUrl = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf'
+const pdf = '../../static/documents.pdf'
 
 const options = {
   cMapUrl: 'cmaps/',
@@ -12,6 +12,7 @@ const options = {
 const renderPage = (_, index) => (
   <Page
     key={index}
+    className='pdf-page'
     pageNumber={index + 1}
   />
 )
@@ -23,8 +24,8 @@ const PdfViewer = props => {
 
   return (
     <Document
-      file={pdfUrl}
-      className='viewer'
+      file={pdf}
+      className='pdf-viewer'
       options={options}
       onLoadSuccess={handlePdfLoad}
       renderMode='svg'

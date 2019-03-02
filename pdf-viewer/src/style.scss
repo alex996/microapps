@@ -1,0 +1,31 @@
+$shadow-color: rgba(0,0,0,0.2);
+
+body {
+  margin: 0;
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  padding: 1rem;
+  background-color: #3f4142;
+  color: #fff;
+}
+
+main {
+  background-color: #fafafa;
+}
+
+.pdf-viewer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .pdf-page {
+    margin: 0.5rem 0;
+    box-shadow: 0px 3px 5px -1px $shadow-color,0px 5px 8px 0px $shadow-color,0px 1px 14px 0px $shadow-color;
+  }
+}

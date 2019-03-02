@@ -1,8 +1,15 @@
 import React from 'react'
-import { PdfViewer } from './PdfViewer'
+import { PdfViewer } from '.'
 
 const App = props => (
-  <PdfViewer />
+  <>
+    <header>
+      Header
+    </header>
+    <main>
+      <PdfViewer />
+    </main>
+  </>
 )
 
 export default App
