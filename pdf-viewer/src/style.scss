@@ -13,6 +13,27 @@ header {
   padding: 1rem;
   background-color: #3f4142;
   color: #fff;
+
+  .action-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .file {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+
+      input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
 }
 
 main {

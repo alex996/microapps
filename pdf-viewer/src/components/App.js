@@ -1,18 +1,27 @@
-import React from 'react'
-import { PdfViewer } from '.'
+import React, { useState } from 'react'
+import { ActionBar, PdfViewer } from '.'
 
-const App = props => (
-  <>
-    <header>
-      PDF Viewer
-    </header>
-    <main>
-      <PdfViewer
-        height={window.innerHeight - 50}
-        width={window.innerWidth}
-      />
-    </main>
-  </>
-)
+const demoPdf = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf'
+
+const App = props => {
+  const [file, setFile] = useState(demoPdf)
+
+  const handleFileChange = e => setFile(e.target.files[0])
+
+  return (
+    <>
+      <header>
+        <ActionBar onFileChange={handleFileChange} />
+      </header>
+      <main>
+        <PdfViewer
+          file={file}
+          height={window.innerHeight - 53}
+          width={window.innerWidth}
+        />
+      </main>
+    </>
+  )
+}
 
 export default App

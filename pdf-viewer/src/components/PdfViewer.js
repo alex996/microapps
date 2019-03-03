@@ -2,10 +2,7 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Document } from 'react-pdf/dist/entry.webpack'
 import { VariableSizeList as List } from 'react-window'
-import PdfPage from './PdfPage'
-
-// const pdfUrl = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf'
-const pdfUrl = '../../static/documents.pdf'
+import { PdfPage } from '.'
 
 const PAGE_MARGIN = 20
 
@@ -22,7 +19,7 @@ const getAvgPageHeight = pages => (
   ) / pages.length
 )
 
-const PdfViewer = ({ height, width }) => {
+const PdfViewer = ({ file, height, width }) => {
   const [pages, setPages] = useState([])
 
   const handlePdfLoad = pdf => {
@@ -52,7 +49,7 @@ const PdfViewer = ({ height, width }) => {
 
   return (
     <Document
-      file={pdfUrl}
+      file={file}
       renderMode='svg'
       options={options}
       className='pdf-viewer'
@@ -76,11 +73,15 @@ const PdfViewer = ({ height, width }) => {
 }
 
 PdfViewer.propTypes = {
+  file: PropTypes.oneOfType([
+    PropTypes.string, PropTypes.object
+  ]),
   height: PropTypes.number,
   width: PropTypes.number
 }
 
 PdfViewer.defaultProps = {
+  file: '',
   height: window.innerHeight,
   width: window.innerWidth
 }
