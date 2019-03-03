@@ -4,10 +4,12 @@ import { PdfViewer } from '.'
 const App = props => (
   <>
     <header>
-      Header
+      PDF Viewer
     </header>
     <main>
-      <PdfViewer />
+      <PdfViewer
+        height={window.innerHeight - 50}
+      />
     </main>
   </>
 )
