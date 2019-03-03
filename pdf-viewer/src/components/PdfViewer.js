@@ -1,12 +1,15 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { Document, Page } from 'react-pdf/dist/entry.webpack'
+import { Document } from 'react-pdf/dist/entry.webpack'
 import { VariableSizeList as List } from 'react-window'
+import PdfPage from './PdfPage'
 
 // const pdfUrl = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf'
-const pdf = '../../static/documents.pdf'
+const pdfUrl = '../../static/documents.pdf'
 
 const PAGE_MARGIN = 20
+
+const data = { margin: PAGE_MARGIN }
 
 const options = {
   cMapUrl: 'cmaps/',
@@ -17,16 +20,6 @@ const getAvgPageHeight = pages => (
   pages.reduce(
     (avgHeight, page) => avgHeight + page.height + PAGE_MARGIN, 0
   ) / pages.length
-)
-
-const PdfPage = ({ index, style }) => (
-  <div className='pdf-page-container' style={style}>
-    <Page
-      className='pdf-page'
-      pageNumber={index + 1}
-      height={style.height - PAGE_MARGIN}
-    />
-  </div>
 )
 
 const PdfViewer = ({ height, width }) => {
@@ -59,7 +52,7 @@ const PdfViewer = ({ height, width }) => {
 
   return (
     <Document
-      file={pdf}
+      file={pdfUrl}
       renderMode='svg'
       options={options}
       className='pdf-viewer'
@@ -69,6 +62,7 @@ const PdfViewer = ({ height, width }) => {
         <List
           width='100%'
           height={height}
+          itemData={data}
           itemCount={pages.length}
           itemSize={getPageHeight}
           estimatedItemSize={getAvgPageHeight(pages)}
