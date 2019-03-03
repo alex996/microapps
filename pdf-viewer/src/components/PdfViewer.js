@@ -6,7 +6,7 @@ import { VariableSizeList as List } from 'react-window'
 // const pdfUrl = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf'
 const pdf = '../../static/documents.pdf'
 
-const PAGE_MARGIN = 10
+const PAGE_MARGIN = 20
 
 const options = {
   cMapUrl: 'cmaps/',
@@ -19,17 +19,17 @@ const getAvgPageHeight = pages => (
   ) / pages.length
 )
 
-const PdfPage = ({ index, style, data: getPageWidth }) => (
+const PdfPage = ({ index, style }) => (
   <div className='pdf-page-container' style={style}>
     <Page
       className='pdf-page'
       pageNumber={index + 1}
-      width={getPageWidth(index)}
+      height={style.height - PAGE_MARGIN}
     />
   </div>
 )
 
-const PdfViewer = ({ height }) => {
+const PdfViewer = ({ height, width }) => {
   const [pages, setPages] = useState([])
 
   const handlePdfLoad = pdf => {
@@ -38,35 +38,40 @@ const PdfViewer = ({ height }) => {
       .map(pageNumber => pdf.getPage(pageNumber)) // [PDFPageProxy,...,N]
 
     Promise.all(promises).then(pdfPages => {
-      const pages = pdfPages.map(page => ({
-        height: page.view[3],
-        width: page.view[2]
-      }))
+      const pages = pdfPages.map(page => {
+        const [, , actualWidth, actualHeight] = page.view
+
+        const adjustedWidth = Math.min(actualWidth, width)
+        const ratio = adjustedWidth / actualWidth
+        const adjustedHeight = actualHeight * ratio
+
+        return {
+          height: adjustedHeight,
+          width: adjustedWidth
+        }
+      })
 
       setPages(pages)
     })
   }
 
-  const getPageHeight = index => pages[index].height + PAGE_MARGIN
-
-  const getPageWidth = index => Math.min(pages[index].width, window.innerWidth) - PAGE_MARGIN
+  const getPageHeight = index => pages[index].height
 
   return (
     <Document
       file={pdf}
       renderMode='svg'
       options={options}
+      className='pdf-viewer'
       onLoadSuccess={handlePdfLoad}
     >
       {pages.length && (
         <List
           width='100%'
           height={height}
-          className='pdf-viewer'
           itemCount={pages.length}
           itemSize={getPageHeight}
           estimatedItemSize={getAvgPageHeight(pages)}
-          itemData={getPageWidth}
           overscanCount={1}
         >
           {PdfPage}
@@ -77,11 +82,13 @@ const PdfViewer = ({ height }) => {
 }
 
 PdfViewer.propTypes = {
-  height: PropTypes.number
+  height: PropTypes.number,
+  width: PropTypes.number
 }
 
 PdfViewer.defaultProps = {
-  height: window.innerHeight
+  height: window.innerHeight,
+  width: window.innerWidth
 }
 
 export default PdfViewer

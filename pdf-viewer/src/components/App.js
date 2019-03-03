@@ -9,6 +9,7 @@ const App = props => (
     <main>
       <PdfViewer
         height={window.innerHeight - 50}
+        width={window.innerWidth}
       />
     </main>
   </>
