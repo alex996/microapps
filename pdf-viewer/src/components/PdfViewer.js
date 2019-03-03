@@ -19,6 +19,24 @@ const getAvgPageHeight = pages => (
   ) / pages.length
 )
 
+const getAdjustedPages = (pdfPages, containerWidth) =>
+  pdfPages.map(page => {
+    const [, , actualWidth, actualHeight] = page.view
+
+    const adjustedWidth = Math.min(actualWidth, containerWidth)
+    const ratio = adjustedWidth / actualWidth
+    const adjustedHeight = actualHeight * ratio
+
+    return {
+      height: adjustedHeight,
+      width: adjustedWidth
+    }
+  })
+
+const getWidestPage = pages => pages.reduce(
+  (prevPage, page) => prevPage.width > page.width ? prevPage : page
+)
+
 const PdfViewer = ({ file, scale, height, width }) => {
   const [pages, setPages] = useState([])
 
@@ -31,20 +49,7 @@ const PdfViewer = ({ file, scale, height, width }) => {
       .map(pageNumber => pdf.getPage(pageNumber)) // [PDFPageProxy,...,N]
 
     Promise.all(promises).then(pdfPages => {
-      const pages = pdfPages.map(page => {
-        const [, , actualWidth, actualHeight] = page.view
-
-        const adjustedWidth = Math.min(actualWidth, width)
-        const ratio = adjustedWidth / actualWidth
-        const adjustedHeight = actualHeight * ratio
-
-        return {
-          height: adjustedHeight,
-          width: adjustedWidth
-        }
-      })
-
-      setPages(pages)
+      setPages(getAdjustedPages(pdfPages, width))
     })
   }
 
@@ -60,13 +65,9 @@ const PdfViewer = ({ file, scale, height, width }) => {
     if (list.current && scroller.current) {
       list.current.resetAfterIndex(0) // re-render
 
-      const widestPage = pages.reduce(
-        (prevPage, page) => prevPage.width > page.width ? prevPage : page
-      )
-
       // With vertical lists, react-window only updates the height. We
       // need to also update the width, so the page doesn't get cut off.
-      scroller.current.style.width = `${widestPage.width * scale}px`
+      scroller.current.style.width = `${getWidestPage(pages).width * scale}px`
     }
   }, [scale])
 
@@ -82,14 +83,14 @@ const PdfViewer = ({ file, scale, height, width }) => {
         <List
           ref={list}
           width='100%'
-          className='pdf-viewer'
-          innerRef={scroller}
           height={height}
           itemData={data}
+          overscanCount={1}
+          innerRef={scroller}
+          className='pdf-viewer'
           itemCount={pages.length}
           itemSize={getPageHeight}
           estimatedItemSize={getAvgPageHeight(pages)}
-          overscanCount={1}
         >
           {PdfPage}
         </List>
