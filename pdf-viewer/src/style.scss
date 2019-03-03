@@ -3,6 +3,7 @@
 @import "../node_modules/bulma/sass/utilities/_all.sass";
 @import "../node_modules/bulma/sass/base/_all.sass";
 
+@import "../node_modules/bulma/sass/elements/button.sass";
 @import "../node_modules/bulma/sass/elements/form.sass";
 
 html {
@@ -24,6 +25,10 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .button {
+      border-radius: 50%;
+    }
   }
 }
 
@@ -32,13 +37,26 @@ main {
   background-color: $white-ter;
 }
 
-.pdf-page-container {
+.pdf-viewer {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
 
-  .pdf-page {
-    box-shadow: 0px 3px 5px -1px $grey-light,0px 5px 8px 0px $grey-light,0px 1px 14px 0px $grey-light;
+  & > div {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+
+    .pdf-page-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .pdf-page {
+        box-shadow: 0px 3px 5px -1px $grey-light,0px 5px 8px 0px $grey-light,0px 1px 14px 0px $grey-light;
+      }
+    }
+
   }
 }

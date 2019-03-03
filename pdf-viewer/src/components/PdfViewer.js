@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Document } from 'react-pdf/dist/entry.webpack'
 import { VariableSizeList as List } from 'react-window'
@@ -19,8 +19,11 @@ const getAvgPageHeight = pages => (
   ) / pages.length
 )
 
-const PdfViewer = ({ file, height, width }) => {
+const PdfViewer = ({ file, scale, height, width }) => {
   const [pages, setPages] = useState([])
+
+  const list = useRef()
+  const scroller = useRef()
 
   const handlePdfLoad = pdf => {
     const promises = Array
@@ -45,7 +48,27 @@ const PdfViewer = ({ file, height, width }) => {
     })
   }
 
-  const getPageHeight = index => pages[index].height
+  const getPageHeight = index => pages[index].height * scale
+
+  useEffect(() => {
+    if (pages.length) {
+      setPages([])
+    }
+  }, [file])
+
+  useEffect(() => {
+    if (list.current && scroller.current) {
+      list.current.resetAfterIndex(0) // re-render
+
+      const widestPage = pages.reduce(
+        (prevPage, page) => prevPage.width > page.width ? prevPage : page
+      )
+
+      // With vertical lists, react-window only updates the height. We
+      // need to also update the width, so the page doesn't get cut off.
+      scroller.current.style.width = `${widestPage.width * scale}px`
+    }
+  }, [scale])
 
   return (
     <Document
@@ -57,7 +80,10 @@ const PdfViewer = ({ file, height, width }) => {
     >
       {!!pages.length && (
         <List
+          ref={list}
           width='100%'
+          className='pdf-viewer'
+          innerRef={scroller}
           height={height}
           itemData={data}
           itemCount={pages.length}
@@ -76,12 +102,14 @@ PdfViewer.propTypes = {
   file: PropTypes.oneOfType([
     PropTypes.string, PropTypes.object
   ]),
+  scale: PropTypes.number,
   height: PropTypes.number,
   width: PropTypes.number
 }
 
 PdfViewer.defaultProps = {
   file: '',
+  scale: 1,
   height: window.innerHeight,
   width: window.innerWidth
 }

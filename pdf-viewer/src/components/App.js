@@ -3,19 +3,40 @@ import { ActionBar, PdfViewer } from '.'
 
 const demoPdf = 'https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf'
 
+const MAX_SCALE = 4
+const ZOOM_STEP = 0.25
+
 const App = props => {
   const [file, setFile] = useState(demoPdf)
+  const [scale, setScale] = useState(1)
 
   const handleFileChange = e => setFile(e.target.files[0])
+
+  const onZoomIn = () => {
+    if (scale < MAX_SCALE) {
+      setScale(scale + ZOOM_STEP)
+    }
+  }
+
+  const onZoomOut = () => {
+    if (scale > ZOOM_STEP) {
+      setScale(scale - ZOOM_STEP)
+    }
+  }
 
   return (
     <>
       <header>
-        <ActionBar onFileChange={handleFileChange} />
+        <ActionBar
+          onZoomIn={onZoomIn}
+          onZoomOut={onZoomOut}
+          onFileChange={handleFileChange}
+        />
       </header>
       <main>
         <PdfViewer
           file={file}
+          scale={scale}
           height={window.innerHeight - 43}
           width={window.innerWidth}
         />
