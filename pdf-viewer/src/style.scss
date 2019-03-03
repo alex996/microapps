@@ -1,56 +1,44 @@
-$shadow-color: rgba(0,0,0,0.2);
+@charset "utf-8";
 
-body {
-  margin: 0;
+@import "../node_modules/bulma/sass/utilities/_all.sass";
+@import "../node_modules/bulma/sass/base/_all.sass";
+
+@import "../node_modules/bulma/sass/elements/form.sass";
+
+html {
+  overflow-y: auto;
 }
 
 #app {
   display: flex;
   flex-direction: column;
+  height: 100vh;
 }
 
 header {
-  padding: 1rem;
-  background-color: #3f4142;
-  color: #fff;
+  padding: 0.5rem 1rem;
+  background-color: $dark;
+  color: $light;
 
   .action-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    .file {
-      position: relative;
-      overflow: hidden;
-      cursor: pointer;
-
-      input {
-        position: absolute;
-        top: 0;
-        left: 0;
-        opacity: 0;
-        height: 100%;
-        width: 100%;
-      }
-    }
   }
 }
 
 main {
-  background-color: #fafafa;
+  flex: 1;
+  background-color: $white-ter;
 }
 
-.pdf-viewer {
-  text-align: center;
+.pdf-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
-  .pdf-page-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    .pdf-page {
-      box-shadow: 0px 3px 5px -1px $shadow-color,0px 5px 8px 0px $shadow-color,0px 1px 14px 0px $shadow-color;
-    }
+  .pdf-page {
+    box-shadow: 0px 3px 5px -1px $grey-light,0px 5px 8px 0px $grey-light,0px 1px 14px 0px $grey-light;
   }
 }

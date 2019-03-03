@@ -16,7 +16,7 @@ const App = props => {
       <main>
         <PdfViewer
           file={file}
-          height={window.innerHeight - 53}
+          height={window.innerHeight - 43}
           width={window.innerWidth}
         />
       </main>

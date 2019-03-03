@@ -3,17 +3,18 @@ import PropTypes from 'prop-types'
 
 const ActionBar = ({ onFileChange }) => (
   <div className='action-bar'>
-    <span className='branding'>PDF Viewer</span>
+    <span>PDF Viewer</span>
 
-    <div className='zoom-buttons'>
-      <button>-</button>
-      <button>+</button>
+    <div className='file is-small'>
+      <label className='file-label'>
+        <input className='file-input' type='file' onChange={onFileChange} />
+        <span className='file-cta'>
+          <span className='file-label'>
+            Upload
+          </span>
+        </span>
+      </label>
     </div>
-
-    <label className='file'>
-      <input type='file' onChange={onFileChange} />
-      <span>Upload</span>
-    </label>
   </div>
 )
 

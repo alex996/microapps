@@ -52,10 +52,10 @@ const PdfViewer = ({ file, height, width }) => {
       file={file}
       renderMode='svg'
       options={options}
-      className='pdf-viewer'
+      className='has-text-centered'
       onLoadSuccess={handlePdfLoad}
     >
-      {pages.length && (
+      {!!pages.length && (
         <List
           width='100%'
           height={height}
