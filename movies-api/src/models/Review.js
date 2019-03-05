@@ -1,6 +1,13 @@
 import mongoose, { Schema } from 'mongoose'
 
+const { ObjectId } = Schema.Types
+
 const reviewSchema = new Schema({
+  movieId: {
+    type: ObjectId,
+    ref: 'Movie',
+    required: true
+  },
   comment: {
     type: String,
     required: true,
@@ -20,7 +27,7 @@ const reviewSchema = new Schema({
       minlength: 1,
       maxlength: 254,
       validate: [
-        email => /^\S+@\S+$/,
+        email => /^\S+@\S+$/.test(email),
         '{PATH} must be a valid email address.'
       ]
     }
@@ -29,7 +36,7 @@ const reviewSchema = new Schema({
     type: Number,
     required: true,
     min: 1,
-    max: 5
+    max: 10
   }
 }, {
   timestamps: true

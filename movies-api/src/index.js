@@ -3,7 +3,7 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import morgan from 'morgan'
 import { APP_PORT, LOG_FORMAT, DB_URI, DB_OPTIONS } from './config'
-import { movies, notFound, errorHandler } from './middleware'
+import { movies, reviews, notFound, errorHandler } from './middleware'
 
 (async () => {
   try {
@@ -20,6 +20,8 @@ import { movies, notFound, errorHandler } from './middleware'
     app.use(morgan(LOG_FORMAT))
 
     app.use(movies)
+
+    app.use(reviews)
 
     app.use(notFound)
 

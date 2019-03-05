@@ -5,16 +5,13 @@ import { objectId, resolve } from './utils'
 
 const router = express.Router()
 
-/*
-  TODO: validate query, max limit/page + sorting via middleware
-  get(paginate, sort(Movie.sortableFeilds), (req, res) => {}
-*/
-
 const fillable = body => (
   ({ title, genre, minutes, year }) => ({ title, genre, minutes, year })
 )(body)
 
-const resolveMovie = resolve(Movie, 'movie')
+const resolveMovie = resolve({
+  model: Movie, param: 'movieId', variable: 'movie'
+})
 
 router.route('/movies')
   .get(async (req, res, next) => {

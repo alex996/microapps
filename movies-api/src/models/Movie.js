@@ -1,7 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
 
-const { ObjectId } = Schema.Types
-
 const genres = [
   'action', 'adventure', 'comedy', 'thriller', 'crime', 'drama', 'fantasy', 'sci-fi', 'history', 'mystery'
 ]
@@ -34,11 +32,7 @@ const movieSchema = new Schema({
     required: true,
     min: 1900,
     max: 2999
-  },
-  reviews: [{
-    type: ObjectId,
-    ref: 'Review'
-  }]
+  }
 }, {
   timestamps: true
 })
@@ -50,6 +44,10 @@ movieSchema.methods.fill = function (data) {
   })
 
   return this
+}
+
+movieSchema.statics.exists = async function (options) {
+  return await this.where(options).countDocuments() !== 0
 }
 
 const Movie = mongoose.model('Movie', movieSchema)
