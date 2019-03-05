@@ -1,7 +1,7 @@
+import { NotFound } from '../errors'
+
 export const notFound = (req, res, next) => {
-  const err = new Error('Not Found')
-  err.status = 404
-  next(err)
+  next(new NotFound())
 }
 
 export const errorHandler = (err, req, res, next) => {

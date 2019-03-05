@@ -1,6 +1,7 @@
 import express from 'express'
 import { Movie } from '../models'
 import { BadRequest, NotFound } from '../errors'
+import { objectId } from './validation'
 
 const router = express.Router()
 
@@ -9,12 +10,18 @@ const router = express.Router()
   get(paginate, sort(Movie.sortableFeilds), (req, res) => {}
 */
 
+const fillable = body => (
+  ({ title, genre, minutes, year }) => ({ title, genre, minutes, year })
+)(body)
+
 router.route('/movies')
-  .get(async (req, res) => {
+  .get(async (req, res, next) => {
     const { limit = 10, page = 1 } = req.query
 
-    if (limit > 100) {
-      throw new BadRequest('Limit cannot exceed 100.')
+    if (limit < 1 || limit > 100) {
+      throw new BadRequest('Limit must be between 1 and 100.')
+    } else if (page < 1) {
+      throw new BadRequest('Page number must start at 1.')
     }
 
     const [data, total] = await Promise.all([
@@ -23,13 +30,14 @@ router.route('/movies')
         .limit(+limit)
         .skip((page - 1) * limit)
         .sort({ 'title': 'asc' })
+        .select('-__v')
         .lean(),
       Movie.countDocuments()
     ])
 
     const pages = Math.ceil(total / limit)
     const hasMore = page < pages
-    const hasLess = page > 1 && hasMore
+    const hasLess = page > 1 && page <= pages
 
     res.json({
       data,
@@ -46,9 +54,17 @@ router.route('/movies')
   })
 
 router.route('/movies/:movieId')
-  .get(async (req, res) => {
-    // TODO: validate object ID (middleware?)
-    const movie = await Movie.findById(req.params.movieId)
+  .get(objectId, async ({ params: { movieId } }, res) => {
+    const movie = await Movie.findById(movieId)
+
+    if (!movie) {
+      throw new NotFound('Movie does not exist.')
+    }
+
+    res.send(res.locals.movie)
+  })
+  .put(objectId, async (req, res) => {
+    const movie = await Movie.findOneAndReplace({ _id: req.params.movieId }, fillable(req.body))
 
     if (!movie) {
       throw new NotFound('Movie does not exist.')
@@ -56,17 +72,18 @@ router.route('/movies/:movieId')
 
     res.send(movie)
   })
-  .put(async (req, res) => {
-
-  })
-  .patch(async (req, res) => {
-    const movie = await Movie.findByIdAndUpdate(req.params.movieId)
+  .patch(objectId, async (req, res) => {
+    const movie = await Movie.findByIdAndUpdate(req.params.movieId, fillable(req.body), { runValidators: true })
     res.json(movie)
   })
-  .delete(async (req, res) => {
-    const id = req.params.movieId
-    await Movie.findByIdAndDelete(id)
-    res.json({ id })
+  .delete(objectId, async (req, res) => {
+    const movie = await Movie.findByIdAndDelete(req.params.movieId)
+
+    if (!movie) {
+      throw new NotFound('Movie does not exist.')
+    }
+
+    res.json(movie)
   })
 
 export default router

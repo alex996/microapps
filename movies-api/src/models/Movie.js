@@ -43,6 +43,14 @@ const movieSchema = new Schema({
   timestamps: true
 })
 
+movieSchema.methods.fill = function (data) {
+  Object.entries(data).forEach(([key, value]) => {
+    this[key] = value
+  })
+
+  return this
+}
+
 const Movie = mongoose.model('Movie', movieSchema)
 
 export default Movie
