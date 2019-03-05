@@ -1,7 +1,7 @@
 import express from 'express'
 import { Movie } from '../models'
 import { BadRequest, NotFound } from '../errors'
-import { objectId } from './validation'
+import { objectId, resolve } from './utils'
 
 const router = express.Router()
 
@@ -13,6 +13,8 @@ const router = express.Router()
 const fillable = body => (
   ({ title, genre, minutes, year }) => ({ title, genre, minutes, year })
 )(body)
+
+const resolveMovie = resolve(Movie, 'movie')
 
 router.route('/movies')
   .get(async (req, res, next) => {
@@ -54,36 +56,35 @@ router.route('/movies')
   })
 
 router.route('/movies/:movieId')
-  .get(objectId, async ({ params: { movieId } }, res) => {
-    const movie = await Movie.findById(movieId)
-
-    if (!movie) {
-      throw new NotFound('Movie does not exist.')
-    }
-
+  .get(objectId, resolveMovie, (req, res) => {
     res.send(res.locals.movie)
   })
   .put(objectId, async (req, res) => {
-    const movie = await Movie.findOneAndReplace({ _id: req.params.movieId }, fillable(req.body))
+    const { movieId: _id } = req.params
+    const { upserted } = await Movie
+      .replaceOne({ _id }, fillable(req.body), { upsert: true })
+      .select('-__v')
 
-    if (!movie) {
+    res.status(upserted ? 201 : 200).send(
+      await Movie.findById(_id).select('-__v')
+    )
+  })
+  .patch(objectId, resolveMovie, async (req, res) => {
+    const { movie } = res.locals
+
+    movie.fill(fillable(req.body))
+    await movie.save()
+
+    res.json(movie)
+  })
+  .delete(objectId, async ({ params: { movieId: _id } }, res) => {
+    const { deletedCount } = await Movie.deleteOne({ _id })
+
+    if (!deletedCount) {
       throw new NotFound('Movie does not exist.')
     }
 
-    res.send(movie)
-  })
-  .patch(objectId, async (req, res) => {
-    const movie = await Movie.findByIdAndUpdate(req.params.movieId, fillable(req.body), { runValidators: true })
-    res.json(movie)
-  })
-  .delete(objectId, async (req, res) => {
-    const movie = await Movie.findByIdAndDelete(req.params.movieId)
-
-    if (!movie) {
-      throw new NotFound('Movie does not exist.')
-    }
-
-    res.json(movie)
+    res.sendStatus(204)
   })
 
 export default router

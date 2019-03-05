@@ -45,6 +45,7 @@ const movieSchema = new Schema({
 
 movieSchema.methods.fill = function (data) {
   Object.entries(data).forEach(([key, value]) => {
+    console.log(key, value)
     this[key] = value
   })
 
