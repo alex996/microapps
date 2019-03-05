@@ -7,7 +7,8 @@
 - GET /movies
 - POST /movies
 - GET /movies/:movieId
-- PUT/PATCH /movies/:movieId
+- PUT /movies/:movieId
+- PATCH /movies/:movieId
 - DELETE /movies/:movieId
 
 ### Reviews
@@ -39,6 +40,12 @@ curl 127.0.0.1:27017 # It looks like you are trying to access MongoDB over HTTP 
 ## TODO
 
 - pagination
+  - TODO: validate query, max limit/page + sorting via middleware
+  - e.g. `get(paginate, sort(Movie.sortableFeilds), (req, res) => {}`
 - filtering
 - csrf (e.g. csurf)
 - security headers
+
+## References
+
+- [RFC7231 spec](https://tools.ietf.org/html/rfc7231#section-4.3)
