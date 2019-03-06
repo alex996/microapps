@@ -1,13 +1,10 @@
 import express from 'express'
+import pick from 'lodash/pick'
 import { Movie } from '../models'
 import { BadRequest, NotFound } from '../errors'
 import { objectId, resolve } from './utils'
 
 const router = express.Router()
-
-const fillable = body => (
-  ({ title, genre, minutes, year }) => ({ title, genre, minutes, year })
-)(body)
 
 const resolveMovie = resolve({
   model: Movie, param: 'movieId', variable: 'movie'
@@ -17,6 +14,7 @@ router.route('/movies')
   .get(async (req, res, next) => {
     const { limit = 10, page = 1 } = req.query
 
+    // TODO: check for integer values, cast to int
     if (limit < 1 || limit > 100) {
       throw new BadRequest('Limit must be between 1 and 100.')
     } else if (page < 1) {
@@ -59,8 +57,11 @@ router.route('/movies/:movieId')
   .put(objectId, async (req, res) => {
     const { movieId: _id } = req.params
     const { upserted } = await Movie
-      .replaceOne({ _id }, fillable(req.body), { upsert: true })
-      .select('-__v')
+      .replaceOne(
+        { _id },
+        pick(req.body, Movie.fillable),
+        { upsert: true, runValidators: true }
+      )
 
     res.status(upserted ? 201 : 200).send(
       await Movie.findById(_id).select('-__v')
@@ -69,8 +70,7 @@ router.route('/movies/:movieId')
   .patch(objectId, resolveMovie, async (req, res) => {
     const { movie } = res.locals
 
-    movie.fill(fillable(req.body))
-    await movie.save()
+    await movie.fill(pick(req.body, Movie.fillable)).save()
 
     res.json(movie)
   })

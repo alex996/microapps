@@ -37,9 +37,12 @@ const movieSchema = new Schema({
   timestamps: true
 })
 
+movieSchema.statics.fillable = [
+  'title', 'genre', 'minutes', 'year'
+]
+
 movieSchema.methods.fill = function (data) {
   Object.entries(data).forEach(([key, value]) => {
-    console.log(key, value)
     this[key] = value
   })
 
