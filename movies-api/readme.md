@@ -1,25 +1,61 @@
 # Movies API
 
+REST API for movie reviews with [Express 5.x (alpha)](https://expressjs.com/en/guide/migrating-5.html) and [Mongoose 5.x](https://mongoosejs.com/).
+
+## Scripts
+
+```sh
+# Watch a dev server
+npm run dev
+
+# Seed MongoDB with fakes
+npm run seed
+
+# Run a prod server
+npm start
+```
+
 ## Endpoints
 
 ### Movies
 
-- GET /movies
-- POST /movies
-- GET /movies/:movieId
-- PUT /movies/:movieId
-- PATCH /movies/:movieId
-- DELETE /movies/:movieId
+Method | URI
+------ | ---
+GET | /movies
+POST | /movies
+GET | /movies/:movieId
+PUT | /movies/:movieId
+PATCH | /movies/:movieId
+DELETE | /movies/:movieId
 
 ### Reviews
 
-- GET /movies/:movieId/reviews
-- POST /movies/:movieId/reviews
-- GET /movies/:movieId/reviews/:id
-- PUT/PATCH /movies/:movieId/reviews/:id
-- DELETE /movies/:movieId/reviews/:id
+Method | URI
+------ | ---
+GET | /movies/:movieId/reviews
+POST | /movies/:movieId/reviews
+GET | /movies/:movieId/reviews/:reviewId
+PUT | /movies/:movieId/reviews/:reviewId
+PATCH | /movies/:movieId/reviews/:reviewId
+DELETE | /movies/:movieId/reviews/:reviewId
+
+## API
+
+Status | Description
+------ | -----------
+200 | Success
+201 | Resouce created
+204 | No content
+400 | Malformed request
+422 | Failed validation
+500 | Server error
 
 ## Docker
+
+The easier way to get a MongoDB instance is to fire up a Docker container.
+
+<details><summary>Instructions</summary>
+<p>
 
 ```sh
 # Start a MongoDB container in the background on port 27017 and create a 'root' user on the 'admin' database
@@ -37,12 +73,15 @@ db.createUser({
 curl 127.0.0.1:27017 # It looks like you are trying to access MongoDB over HTTP on the native driver port.
 ```
 
+</p>
+</details>
+
 ## TODO
 
 - pagination
   - TODO: validate query, max limit/page + sorting via middleware
   - e.g. `get(paginate, sort(Movie.sortableFeilds), (req, res) => {}`
-- filtering
+- filtering by fields
 - csrf (e.g. csurf)
 - security headers
 
