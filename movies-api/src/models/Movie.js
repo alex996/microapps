@@ -41,14 +41,6 @@ movieSchema.statics.fillable = [
   'title', 'genre', 'minutes', 'year'
 ]
 
-movieSchema.methods.fill = function (data) {
-  Object.entries(data).forEach(([key, value]) => {
-    this[key] = value
-  })
-
-  return this
-}
-
 movieSchema.statics.exists = async function (options) {
   return await this.where(options).countDocuments() !== 0
 }
