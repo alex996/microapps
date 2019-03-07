@@ -30,7 +30,7 @@ router.route('/movies/:movieId/reviews')
       movieId
     })
 
-    res.send(review)
+    res.status(201).send(review)
   })
 
 router.route('/movies/:movieId/reviews/:reviewId')
