@@ -1,14 +1,11 @@
 import express from 'express'
-import pick from 'lodash/pick'
 import { Movie } from '../models'
-import { BadRequest, NotFound } from '../errors'
-import { objectId, resolve } from './utils'
+import { BadRequest } from '../errors'
+import { objectId, abortIf } from './utils'
 
 const router = express.Router()
 
-const resolveMovie = resolve({
-  model: Movie, param: 'movieId', variable: 'movie'
-})
+export const MOVIE_NOT_FOUND = 'Movie not found.'
 
 router.route('/movies')
   .get(async (req, res, next) => {
@@ -51,35 +48,37 @@ router.route('/movies')
   })
 
 router.route('/movies/:movieId')
-  .get(objectId, resolveMovie, (req, res) => {
-    res.send(res.locals.movie)
+  .get(objectId, async (req, res) => {
+    const movie = await Movie.findById(req.params.movieId)
+
+    abortIf(!movie, 404, MOVIE_NOT_FOUND)
+
+    res.send(movie)
   })
   .put(objectId, async (req, res) => {
     const { movieId: _id } = req.params
     const { upserted } = await Movie
       .replaceOne(
-        { _id },
-        pick(req.body, Movie.fillable),
-        { upsert: true, runValidators: true }
+        { _id }, Movie.filterOut(req.body), { upsert: true, runValidators: true }
       )
 
     res.status(upserted ? 201 : 200).send(
       await Movie.findById(_id).select('-__v')
     )
   })
-  .patch(objectId, resolveMovie, async (req, res) => {
-    const { movie } = res.locals
+  .patch(objectId, async (req, res) => {
+    const movie = await Movie.findByIdAndUpdate(
+      req.params.movieId, Movie.filterOut(req.body), { runValidators: true, new: true }
+    ).select('-__v')
 
-    await movie.fill(pick(req.body, Movie.fillable)).save()
+    abortIf(!movie, 404, MOVIE_NOT_FOUND)
 
     res.json(movie)
   })
   .delete(objectId, async ({ params: { movieId: _id } }, res) => {
     const { deletedCount } = await Movie.deleteOne({ _id })
 
-    if (!deletedCount) {
-      throw new NotFound('Movie does not exist.')
-    }
+    abortIf(!deletedCount, 404, MOVIE_NOT_FOUND)
 
     res.sendStatus(204)
   })
