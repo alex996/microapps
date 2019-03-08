@@ -1,27 +1,20 @@
 import express from 'express'
 import { Movie } from '../models'
-import { BadRequest } from '../errors'
 import { objectId, abortIf } from './utils'
+import { paginate, pageUrls } from './paginate'
 
 const router = express.Router()
 
 export const MOVIE_NOT_FOUND = 'Movie not found.'
 
 router.route('/movies')
-  .get(async (req, res, next) => {
-    const { limit = 10, page = 1 } = req.query
-
-    // TODO: check for integer values, cast to int
-    if (limit < 1 || limit > 100) {
-      throw new BadRequest('Limit must be between 1 and 100.')
-    } else if (page < 1) {
-      throw new BadRequest('Page number must start at 1.')
-    }
+  .get(paginate, async (req, res) => {
+    const { limit, page } = res.locals
 
     const [data, total] = await Promise.all([
       Movie
         .find({})
-        .limit(+limit)
+        .limit(limit)
         .skip((page - 1) * limit)
         .sort({ 'title': 'asc' })
         .select('-__v')
@@ -29,16 +22,10 @@ router.route('/movies')
       Movie.countDocuments()
     ])
 
-    const pages = Math.ceil(total / limit)
-    const hasMore = page < pages
-    const hasLess = page > 1 && page <= pages
+    const { next, prev } = pageUrls(req, total)
 
     res.json({
-      data,
-      total,
-      count: data.length,
-      next: hasMore ? `/movies?limit=${limit}&page=${+page + 1}` : '',
-      prev: hasLess ? `/movies?limit=${limit}&page=${page - 1}` : ''
+      data, total, count: data.length, next, prev
     })
   })
   .post(async (req, res) => {
