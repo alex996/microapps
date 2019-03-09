@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 import {
   Breadcrumbs as MuiBreadcrumbs,
-  Link as MuiLink, Typography
+  Link as MuiLink,
+  Typography
 } from '@material-ui/core'
 import { Layers, Share, NavigateNext } from '@material-ui/icons'
 
@@ -21,15 +22,20 @@ const Icon = styled(({ icon: Icon, ...other }) => <Icon {...other} />)`
 const Link = styled(MuiLink)`
   display: flex;
   align-items: center;
-  color: ${props => props.theme.palette.common.white}
+  color: ${props => props.theme.palette.common.white};
 `
 
 const Breadcrumbs = ({ links, ...other }) => (
-  <MuiBreadcrumbs separator={<Separator color='secondary' fontSize='large' />} {...other}>
+  <MuiBreadcrumbs
+    separator={<Separator color="secondary" fontSize="large" />}
+    {...other}
+  >
     {links.map(({ href = '#', icon, text, color = 'inherit' }, index) => (
-      <Link key={index} href={href} underline='none'>
+      <Link key={index} href={href} underline="none">
         <Icon icon={icon} />
-        <Typography color={color} variant='button'>{text}</Typography>
+        <Typography color={color} variant="button">
+          {text}
+        </Typography>
       </Link>
     ))}
   </MuiBreadcrumbs>

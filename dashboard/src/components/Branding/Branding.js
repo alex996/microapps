@@ -27,7 +27,7 @@ const Typography = styled(MuiTypography)`
 const Branding = ({ icon, title }) => (
   <Container>
     <Square>{icon}</Square>
-    <Typography color='inherit' variant='h4'>
+    <Typography color="inherit" variant="h4">
       {title}
     </Typography>
   </Container>

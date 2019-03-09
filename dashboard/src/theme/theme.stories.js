@@ -14,14 +14,15 @@ const Caption = styled(Typography)`
   padding: 0.25rem;
 `
 
+// eslint-disable-next-line react/prop-types
 const ColorDrop = ({ variation, color }) => (
   <Paper>
-    <Grid direction='column' justify='center' container>
+    <Grid direction="column" justify="center" container>
       <Grid item>
         <Color hex={color} />
       </Grid>
       <Grid item>
-        <Caption align='center'>
+        <Caption align="center">
           {variation} / {color}
         </Caption>
       </Grid>
@@ -29,26 +30,27 @@ const ColorDrop = ({ variation, color }) => (
   </Paper>
 )
 
-storiesOf('Styling / theme', module)
-  .add('palette', () => (
-    <Grid spacing={2} container>
-      {['primary', 'secondary'].map(intention => (
-        <Grid key={intention} item>
-          <Grid spacing={3} direction='column' container>
-            <Grid item>
-              <Paper>
-                <Typography align='center' variant='button' component='p'>
-                  {intention}
-                </Typography>
-              </Paper>
-            </Grid>
-            {Object.entries(theme.palette[intention]).map(([variation, color]) => (
+storiesOf('Styling / theme', module).add('palette', () => (
+  <Grid spacing={2} container>
+    {['primary', 'secondary'].map(intention => (
+      <Grid key={intention} item>
+        <Grid spacing={3} direction="column" container>
+          <Grid item>
+            <Paper>
+              <Typography align="center" variant="button" component="p">
+                {intention}
+              </Typography>
+            </Paper>
+          </Grid>
+          {Object.entries(theme.palette[intention]).map(
+            ([variation, color]) => (
               <Grid key={variation} item>
                 <ColorDrop variation={variation} color={color} />
               </Grid>
-            ))}
-          </Grid>
+            )
+          )}
         </Grid>
-      ))}
-    </Grid>
-  ))
+      </Grid>
+    ))}
+  </Grid>
+))

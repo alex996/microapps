@@ -9,15 +9,11 @@ const AppBar = styled(MuiAppBar)`
 `
 
 const NavBar = ({ branding, breadcrumbs, ...other }) => (
-  <AppBar position='static' {...other}>
+  <AppBar position="static" {...other}>
     <Toolbar>
-      <Grid spacing={2} alignItems='center' container>
-        <Grid item>
-          {branding}
-        </Grid>
-        <Grid item>
-          {breadcrumbs}
-        </Grid>
+      <Grid spacing={2} alignItems="center" container>
+        <Grid item>{branding}</Grid>
+        <Grid item>{breadcrumbs}</Grid>
       </Grid>
     </Toolbar>
   </AppBar>
