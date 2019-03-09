@@ -78,9 +78,6 @@ curl 127.0.0.1:27017 # It looks like you are trying to access MongoDB over HTTP 
 
 ## TODO
 
-- pagination
-  - TODO: validate query, max limit/page + sorting via middleware
-  - e.g. `get(paginate, sort(Movie.sortableFeilds), (req, res) => {}`
 - filtering by fields
 - csrf (e.g. csurf)
 - security headers
