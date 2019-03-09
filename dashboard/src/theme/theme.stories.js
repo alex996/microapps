@@ -29,7 +29,7 @@ const ColorDrop = ({ variation, color }) => (
   </Paper>
 )
 
-storiesOf('theme', module)
+storiesOf('Styling / theme', module)
   .add('palette', () => (
     <Grid spacing={2} container>
       {['primary', 'secondary'].map(intention => (
