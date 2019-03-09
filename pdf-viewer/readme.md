@@ -13,8 +13,9 @@ Web-based PDF viewer built with [react-pdf](https://github.com/wojtekmaj/react-p
 - text alignment ([fixed](https://github.com/wojtekmaj/react-pdf/issues/332#issuecomment-469037713))
 - icons
 - window resize
-- TOC/outline
 - navigation (e.g. [this](https://github.com/wojtekmaj/react-pdf/issues/327#issuecomment-453009278))
+- text search/highlight
+- TOC/outline
 - memoized callbacks
 
 ## References
