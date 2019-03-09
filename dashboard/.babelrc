@@ -9,6 +9,12 @@
     "@babel/react"
   ],
   "plugins": [
-    "emotion"
+    "emotion",
+    [
+      "transform-react-remove-prop-types",
+      {
+        "mode": "unsafe-wrap"
+      }
+    ]
   ]
 }
