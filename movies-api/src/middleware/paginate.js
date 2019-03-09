@@ -16,18 +16,22 @@ export const paginate = (req, res, next) => {
   res.locals.limit = limit
   res.locals.page = page
 
+  res.paginate = paginateResults
+
   next()
 }
 
-export const pageUrls = (req, total) => {
-  const { path, res: { limit, page } } = req
+function paginateResults (data, total) {
+  const { locals: { limit, page }, req } = this
 
   const pages = Math.ceil(total / limit)
   const hasMore = page < pages
   const hasLess = page > 1 && page <= pages
 
-  return {
-    next: hasMore ? `${path}?limit=${limit}&page=${page + 1}` : '',
-    prev: hasLess ? `${path}?limit=${limit}&page=${page - 1}` : ''
-  }
+  const next = hasMore ? `${req.path}?limit=${limit}&page=${page + 1}` : ''
+  const prev = hasLess ? `${req.path}?limit=${limit}&page=${page - 1}` : ''
+
+  this.json({
+    data, total, count: data.length, next, prev
+  })
 }

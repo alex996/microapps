@@ -1,7 +1,7 @@
 import express from 'express'
 import { Movie } from '../models'
+import { paginate } from './paginate'
 import { objectId, abortIf } from './utils'
-import { paginate, pageUrls } from './paginate'
 
 const router = express.Router()
 
@@ -22,11 +22,7 @@ router.route('/movies')
       Movie.countDocuments()
     ])
 
-    const { next, prev } = pageUrls(req, total)
-
-    res.json({
-      data, total, count: data.length, next, prev
-    })
+    res.paginate(data, total)
   })
   .post(async (req, res) => {
     const { title, genre, minutes, year } = req.body

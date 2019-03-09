@@ -1,7 +1,8 @@
 import express from 'express'
 import { Movie, Review } from '../models'
-import { objectId, abortIf } from './utils'
 import { MOVIE_NOT_FOUND } from './movies'
+import { objectId, abortIf } from './utils'
+import { paginate } from './paginate'
 
 const router = express.Router()
 
@@ -14,13 +15,23 @@ const resolveMovie = async (req, res, next) => {
 }
 
 router.route('/movies/:movieId/reviews')
-  .get(objectId, resolveMovie, async ({ params: { movieId } }, res) => {
-    const reviews = await Review
-      .where({ movieId })
-      .find({})
-      .select('-__v') // TODO: paginate
+  .get(objectId, resolveMovie, paginate, async (req, res) => {
+    const { params: { movieId } } = req
+    const { limit, page } = res.locals
 
-    res.send(reviews)
+    const [data, total] = await Promise.all([
+      Review
+        .where({ movieId })
+        .limit(limit)
+        .skip((page - 1) * limit)
+        .sort({ 'createdAt': 'desc' })
+        .select('-__v')
+        .find({})
+        .lean(),
+      Review.where({ movieId }).countDocuments()
+    ])
+
+    res.paginate(data, total)
   })
   .post(objectId, resolveMovie, async (req, res) => {
     const { movieId } = req.params
