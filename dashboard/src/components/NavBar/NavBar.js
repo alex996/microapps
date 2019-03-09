@@ -1,18 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { AppBar as MuiAppBar, Toolbar, Typography } from '@material-ui/core'
-
-const Branding = props => (
-  <Typography color='inherit' {...props} />
-)
+import { AppBar as MuiAppBar, Toolbar } from '@material-ui/core'
+import { Branding } from '..'
 
 const AppBar = styled(MuiAppBar)`
   background: ${props => props.theme.palette.primary.dark};
 `
 
-const NavBar = ({ branding, ...native }) => (
-  <AppBar position='static' {...native}>
+const NavBar = ({ branding, ...other }) => (
+  <AppBar position='static' {...other}>
     <Toolbar>
       {branding}
     </Toolbar>
@@ -26,7 +23,7 @@ NavBar.propTypes = {
 
 NavBar.defaultProps = {
   ...AppBar.defaultProps,
-  branding: <Branding>algolia</Branding>
+  branding: <Branding />
 }
 
 export default NavBar

@@ -15,6 +15,14 @@
       {
         "mode": "unsafe-wrap"
       }
+    ],
+    [
+      "import",
+      {
+        "libraryName": "@material-ui/icons",
+        "libraryDirectory": "",
+        "camel2DashComponentName": false
+      }
     ]
   ]
 }
