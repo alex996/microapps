@@ -1,13 +1,17 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { CssBaseline } from '@material-ui/core'
 
 const Container = styled.div`
-  background: #eaeaea;
-  padding: 20px;
+  background: ${({ theme }) => theme.palette.grey[300]};
+  padding: ${({ theme }) => theme.spacing(3)}px;
 `
 
 const App = props => (
-  <Container>App</Container>
+  <>
+    <CssBaseline />
+    <Container>App</Container>
+  </>
 )
 
 export default App
