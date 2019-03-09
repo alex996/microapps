@@ -1,14 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { ThemeProvider } from 'emotion-theming'
-import { CssBaseline } from '@material-ui/core'
-import { App } from './components'
-import theme from './theme'
+import App from './App'
 
 render(
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <App />
-  </ThemeProvider>,
-  document.getElementById('app')
+  <App />, document.getElementById('app')
 )

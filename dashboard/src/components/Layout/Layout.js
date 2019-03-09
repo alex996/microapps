@@ -1,10 +1,10 @@
 import React from 'react'
 import { NavBar } from '..'
 
-const App = props => (
+const Layout = props => (
   <>
     <NavBar />
   </>
 )
 
-export default App
+export default Layout

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
-import { AppBar as MuiAppBar, Toolbar } from '@material-ui/core'
+import { AppBar as MuiAppBar, Toolbar, Grid } from '@material-ui/core'
 import { Branding, Breadcrumbs } from '..'
 
 const AppBar = styled(MuiAppBar)`
@@ -11,9 +11,14 @@ const AppBar = styled(MuiAppBar)`
 const NavBar = ({ branding, breadcrumbs, ...other }) => (
   <AppBar position='static' {...other}>
     <Toolbar>
-      {branding}
-
-      {breadcrumbs}
+      <Grid spacing={2} alignItems='center' container>
+        <Grid item>
+          {branding}
+        </Grid>
+        <Grid item>
+          {breadcrumbs}
+        </Grid>
+      </Grid>
     </Toolbar>
   </AppBar>
 )
