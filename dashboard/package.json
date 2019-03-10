@@ -5,7 +5,6 @@
   "license": "MIT",
   "scripts": {
     "start": "start-storybook -c storybook",
-    "dev": "webpack-dev-server --open --port 3000 --compress --mode development",
     "lint": "eslint '**/*.js'",
     "lint:fix": "prettier-eslint '**/*.js' --write",
     "prebuild": "rm -rf dist",
@@ -36,8 +35,7 @@
     "serve": "^10.1.2",
     "source-map-explorer": "^1.7.0",
     "webpack": "^4.29.6",
-    "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.2.1"
+    "webpack-cli": "^3.2.3"
   },
   "dependencies": {
     "@emotion/core": "^10.0.7",
