@@ -11,6 +11,9 @@ npm run dev
 # Seed MongoDB with fakes
 npm run seed
 
+# Build a prod bundle
+npm run build
+
 # Run a prod server
 npm start
 ```
@@ -92,7 +95,7 @@ curl -X POST -H 'Content-Type: application/json' -d '{"title":"Taxi","year":1998
 
 curl localhost:3000/movies/5c96d09f5d1ff23138f46ed6
 
-curl -X PUT -H 'Content-Type: application/json' -d '{"title":"Taxi 2","year":1998}' \
+curl -X PUT -H 'Content-Type: application/json' -d '{"title":"Taxi 2","year":2003}' \
 localhost:3000/movies/5c96d09f5d1ff23138f46ed6
 
 curl -X PATCH -H 'Content-Type: application/json' -d '{"year":2000}' \
