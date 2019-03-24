@@ -20,7 +20,7 @@ npm start
 ### Movies
 
 Method | URI
------- | ---
+:----- | :--
 GET | /movies
 POST | /movies
 GET | /movies/:movieId
@@ -31,7 +31,7 @@ DELETE | /movies/:movieId
 ### Reviews
 
 Method | URI
------- | ---
+:----- | :--
 GET | /movies/:movieId/reviews
 POST | /movies/:movieId/reviews
 GET | /movies/:movieId/reviews/:reviewId
@@ -39,10 +39,37 @@ PUT | /movies/:movieId/reviews/:reviewId
 PATCH | /movies/:movieId/reviews/:reviewId
 DELETE | /movies/:movieId/reviews/:reviewId
 
-## API
+## Models
+
+### Movie
+
+Field     | Type     | Validation
+:-------- | :------- | :---------
+_id       | ObjectId |
+title     | String   | 1-255, trim, required
+genre     | [String] | enum, 0-10
+minutes   | Number   | 1-500
+year      | Number   | 1900-2999, required
+createdAt | Date     |
+updatedAt | Date     |
+
+### Review
+
+Field        | Type     | Validation
+:----------- | :------- | :---------
+_id          | ObjectId |
+movieId      | ObjectId | required
+comment      | String   | 1-4000, required
+author.name  | String   | 1-255, required
+author.email | String   | 1-254, regex, required
+rating       | Number   | 1-10, required
+createdAt    | Date     |
+updatedAt    | Date     |
+
+## Status Codes
 
 Status | Description
------- | -----------
+:----- | :----------
 200 | Success
 201 | Resouce created
 204 | No content
