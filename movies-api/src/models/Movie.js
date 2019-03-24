@@ -1,4 +1,5 @@
 import mongoose, { Schema } from 'mongoose'
+import pick from 'lodash/pick'
 
 const genres = [
   'action', 'adventure', 'comedy', 'thriller', 'crime', 'drama', 'fantasy', 'sci-fi', 'history', 'mystery'
@@ -43,6 +44,10 @@ movieSchema.statics.fillable = [
 
 movieSchema.statics.exists = async function (options) {
   return await this.where(options).countDocuments() !== 0
+}
+
+movieSchema.statics.filterOut = function (payload) {
+  return pick(payload, this.fillable)
 }
 
 const Movie = mongoose.model('Movie', movieSchema)
