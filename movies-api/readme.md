@@ -77,6 +77,53 @@ Status | Description
 422 | Failed validation
 500 | Server error
 
+## Requests
+
+> For a trailing newline, use `-w "\n"`. To have it for *all* requests, run `echo '-w "\n"' >> ~/.curlrc`.
+
+### Movies
+
+```sh
+curl localhost:3000/movies
+
+curl 'localhost:3000/movies?limit=5&page=2'
+
+curl -X POST -H 'Content-Type: application/json' -d '{"title":"Taxi","year":1998}' localhost:3000/movies
+
+curl localhost:3000/movies/5c96d09f5d1ff23138f46ed6
+
+curl -X PUT -H 'Content-Type: application/json' -d '{"title":"Taxi 2","year":1998}' \
+localhost:3000/movies/5c96d09f5d1ff23138f46ed6
+
+curl -X PATCH -H 'Content-Type: application/json' -d '{"year":2000}' \
+localhost:3000/movies/5c96d09f5d1ff23138f46ed6
+
+curl -X DELETE localhost:3000/movies/5c96d09f5d1ff23138f46ed6
+```
+
+### Reviews
+
+```sh
+curl localhost:3000/movies/5c96d09f5d1ff23138f46ed6/reviews
+
+curl 'localhost:3000/movies/5c96d09f5d1ff23138f46ed6/reviews?limit=10&page=3'
+
+curl -X POST -H 'Content-Type: application/json' \
+-d '{"comment":"Love this movie!","author":{"name":"Ray","email":"ray@gmail.com"},"rating":9}' \
+localhost:3000/movies/5c96d09f5d1ff23138f46ed6/reviews
+
+curl localhost:3000/movies/5c96d09f5d1ff23138f46ed6/reviews/5c96d5626390eb383204662b
+
+curl -X PUT -H 'Content-Type: application/json' \
+-d '{"comment":"Best movie ever!","author":{"name":"Ray","email":"ray@gmail.com"},"rating":9.5}' \
+localhost:3000/movies/5c96d09f5d1ff23138f46ed6/reviews/5c96d5626390eb383204662b
+
+curl -X PATCH -H 'Content-Type: application/json' -d '{"rating":10}' \
+localhost:3000/movies/5c96d09f5d1ff23138f46ed6/reviews/5c96d5626390eb383204662b
+
+curl -X DELETE localhost:3000/movies/5c96d09f5d1ff23138f46ed6/reviews/5c96d5626390eb383204662b
+```
+
 ## Docker
 
 The easier way to get a MongoDB instance is to fire up a Docker container.
