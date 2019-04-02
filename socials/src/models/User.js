@@ -5,7 +5,11 @@ const userSchema = new Schema({
     type: String,
     required: true,
     maxlength: 50,
-    trim: true
+    trim: true,
+    validate: [
+      username => User.doesntExist({ username }),
+      'Username is already taken.'
+    ]
   },
   email: {
     type: String,
@@ -16,6 +20,10 @@ const userSchema = new Schema({
     trim: true,
     match: [
       /\S+@\S+\.\S+/, 'Email is invalid.'
+    ],
+    validate: [
+      email => User.doesntExist({ email }),
+      'Email is already taken.'
     ]
   },
   name: {
@@ -29,14 +37,18 @@ const userSchema = new Schema({
     required: true,
     minlength: 8,
     maxlength: 100,
-    validate: [
-      password => /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/.test(password),
+    match: [
+      /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/,
       'Password must contain one lowercase letter, one uppercase letter, and one number.'
     ]
   }
 }, {
   timestamps: true
 })
+
+userSchema.statics.doesntExist = async function (options) {
+  return await this.where(options).countDocuments() === 0
+}
 
 const User = mongoose.model('User', userSchema)
 
