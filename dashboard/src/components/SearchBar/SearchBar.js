@@ -21,8 +21,4 @@ const SearchBar = props => (
   </Button>
 )
 
-SearchBar.propTypes = Fab.propTypes
-
-SearchBar.defaultProps = Fab.defaultProps
-
 export default SearchBar

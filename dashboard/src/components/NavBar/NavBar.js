@@ -26,14 +26,12 @@ const NavBar = ({ branding, breadcrumbs, searchBar, ...other }) => (
 )
 
 NavBar.propTypes = {
-  ...AppBar.propTypes,
   branding: PropTypes.node,
   breadcrumbs: PropTypes.node,
   searchBar: PropTypes.node
 }
 
 NavBar.defaultProps = {
-  ...AppBar.defaultProps,
   branding: <Branding />,
   breadcrumbs: <Breadcrumbs />,
   searchBar: <SearchBar />

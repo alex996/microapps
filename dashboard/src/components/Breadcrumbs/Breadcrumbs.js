@@ -46,12 +46,10 @@ const Breadcrumbs = ({ links, ...other }) => (
 )
 
 Breadcrumbs.propTypes = {
-  ...Breadcrumbs.propTypes,
   links: PropTypes.array
 }
 
 Breadcrumbs.defaultProps = {
-  ...Breadcrumbs.defaultProps,
   links: [
     {
       icon: Layers,
