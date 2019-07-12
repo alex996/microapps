@@ -8,6 +8,7 @@ const Color = styled.div`
   background: ${props => props.hex};
   border-radius: ${props => props.theme.shape.borderRadius}px;
   height: 5rem;
+  min-width: 10rem;
 `
 
 const Caption = styled(Typography)`
@@ -32,7 +33,7 @@ const ColorDrop = ({ variation, color }) => (
 
 storiesOf('Styling / theme', module).add('palette', () => (
   <Grid spacing={2} container>
-    {['primary', 'secondary'].map(intention => (
+    {['primary', 'secondary', 'tertiary'].map(intention => (
       <Grid key={intention} item>
         <Grid spacing={3} direction="column" container>
           <Grid item>
