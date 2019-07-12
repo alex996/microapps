@@ -1,4 +1,4 @@
-# Dashboard
+# (WIP) Dashboard
 
 [Algolia](https://www.algolia.com/)-like dashboard with [Material Design](https://next.material-ui.com/).
 
